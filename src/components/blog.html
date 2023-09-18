@@ -1,0 +1,12 @@
+<script>
+    setTimeout(() => {
+        // 监听返回按钮
+        document.addEventListener('plusready', function () {
+            plus.key.addEventListener('backbutton', function () {
+                history.go(-1); // 返回上一页
+            }, false);
+        })
+    }, 10)
+    //在/js/pace.min.js中加这个
+    // setTimeout(()=>{document.addEventListener('plusready',function(){plus.key.addEventListener('backbutton',function(){history.go(-1)},false)})},10)
+</script>

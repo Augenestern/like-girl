@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .item {
+            width: 200px;
+            height: auto;
+            position: absolute;
+            height: 100px;
+        }
+        .item img{
+            width: 100%;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="con">
+        <div class="item" style="background-color: rgb(45, 178, 178);">1
+        </div>
+        <div class="item" style="background-color: aqua; height: 50px;">2
+        </div>
+        <div class="item" style="background-color: aqua;">3
+        </div>
+        <div class="item" style="background-color: aqua; height: 120px;">4
+        </div>
+        <div class="item" style="background-color: aqua;">5
+        </div>
+        <div class="item" style="background-color: aqua;">6
+        </div>
+        <div class="item" style="background-color: aqua;">7
+        </div>
+        <div class="item" style="background-color: aqua;">8
+        </div>
+        <div class="item" style="background-color: aqua;">1
+        </div>
+        <div class="item" style="background-color: aqua;">1
+        </div>
+        <div class="item" style="background-color: aqua;">1
+        </div>
+        <div class="item" style="background-color: aqua;">1
+        </div>
+        <div class="item" style="background-color: aqua;">1
+        </div>
+        <div class="item" style="background-color: aqua;">1
+        </div>
+    </div>
+</body>
+<script>
+    //当页面加载的时候调用
+    window.onload = function () {
+        //页面初始化调用
+        waterFall()
+        //每次页面改变大小调用
+        window.onresize = waterFall
+    }
+    function waterFall() {
+        // 1. 设置container盒子的宽度
+        //      注意：浏览器的可视区域的宽度 / 一个item元素的宽度 = 一行的排列的元素的个数
+        let container = document.getElementById("con")
+        let item = document.getElementsByClassName("item")
+        //获取元素的宽度(含border，padding)
+        let width = item[0].offsetWidth
+        //计算出浏览器窗口的宽度
+        let clientWidth = document.documentElement.clientWidth;
+        //计算出应该放几列（向下取整）
+        let columnCount = Math.floor(clientWidth / width)
+        //计算空隙
+        let emptyCount = (clientWidth % width) / (columnCount * 2)
+        //设置容器（父盒子）的宽度
+        // container.style.width = columnCount * width + "px"
+
+        // 2.设置每一个item元素的排列位置
+        //  第一行整体的top值都是0 后面的依次找上一行高度最小的容器，在它下面进行排列
+        let hrr = []
+        for (let i = 0; i < item.length; i++) {
+            //定位第一行的图片
+            if (i < columnCount) {
+                item[i].style.top = "0px"
+                item[i].style.left = (i * width + i * emptyCount * 2 + emptyCount) + "px"
+                hrr.push(item[i].offsetHeight+emptyCount)
+            } else {
+                //第一行之后的
+                //选择总高度最小的列
+                let min = Math.min(...hrr)
+                let index = hrr.indexOf(min)
+                //将每个元素定位到当前总高度最小的列下
+                item[i].style.top = min + "px"
+                item[i].style.left = (index * width + index * emptyCount * 2 + emptyCount) + "px"
+                //当前定位的元素加入该列
+                hrr[index] += item[i].offsetHeight+emptyCount
+            }
+        }
+    }
+</script>
+
+</html>
