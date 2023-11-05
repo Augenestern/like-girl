@@ -12,8 +12,8 @@ import router from '@/routes/index'
 // 创建axios实例
 const request = axios.create({
     // baseURL:'/api',// 所有的请求地址前缀部分(没有后端请求不用写)
-    baseURL:"http://8.130.77.88:7001/",
-    // baseURL:"http://127.0.0.1:7001/",
+    // baseURL:"http://8.130.77.88:7001/",
+    baseURL:"http://127.0.0.1:7001/",
     timeout: 80000, // 请求超时时间(毫秒)
     // withCredentials: true,// 异步请求携带cookie
 })
