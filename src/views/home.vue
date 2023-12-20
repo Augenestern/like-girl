@@ -123,7 +123,6 @@ import { showConfirmDialog } from 'vant';
 
 const router = new (useRouter as any)
 let likeyou = () => {
-
     showConfirmDialog({
         title: '退出登录',
         // message:
@@ -160,7 +159,6 @@ onUnmounted(() => {
     background-image: url('/src/assets/haimian.png');
     background-size: cover;
     background-position: bottom center;
-
     color: white;
 }
 

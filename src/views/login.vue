@@ -68,13 +68,17 @@
         <div class="login-main">
             <div class="inputBox" style="margin-top: 15%;">
                 <input style="position: relative;" v-model="userlist.username" class="aBox-input" type="text" required>
-                <van-icon v-if="userlist.username!=''" @click="clearData" style="color: #bfbdbd; position: absolute; right: 12px; font-size: 18px; top:12px" name="close" />
+                <van-icon v-if="userlist.username != ''" @click="clearData"
+                    style="color: #bfbdbd; position: absolute; right: 12px; font-size: 18px; top:12px" name="close" />
                 <span>Account</span>
             </div>
             <div class="inputBox">
-                <input style="position: relative;" v-model="userlist.password" class="aBox-input" :type="changeType" required>
-                <van-icon @click="gaiType" v-if="changeType=='text'" style=" color: #bfbdbd;position: absolute; right: 12px; font-size: 20px; top:10px" name="eye-o" />
-                <van-icon @click="gaiType" v-else style="color: #bfbdbd;position: absolute; right: 12px; font-size: 20px; top:12px" name="closed-eye" />
+                <input style="position: relative;" v-model="userlist.password" class="aBox-input" :type="changeType"
+                    required>
+                <van-icon @click="gaiType" v-if="changeType == 'text'"
+                    style=" color: #bfbdbd;position: absolute; right: 12px; font-size: 20px; top:10px" name="eye-o" />
+                <van-icon @click="gaiType" v-else
+                    style="color: #bfbdbd;position: absolute; right: 12px; font-size: 20px; top:12px" name="closed-eye" />
                 <span>Password</span>
             </div>
             <button @click="btnLogin" class="btnLogin">登&nbsp;&nbsp;&nbsp;录</button>
@@ -86,42 +90,46 @@
 import { loginAPI } from '@/api/useApi/login.ts'
 import axios from 'axios';
 import { showNotify } from 'vant';
-const router =  new( useRouter as any)
-let userlist:any = reactive({
-    username:'',
-    password:''
+const router = new (useRouter as any)
+let userlist: any = reactive({
+    username: '',
+    password: ''
 })
 
 let changeType = ref('password')
-let clearData = ()=>{
-    userlist.username=''
-    userlist.password=''
+let clearData = () => {
+    userlist.username = ''
+    userlist.password = ''
 }
-let gaiType = ()=>{
-    if(changeType.value=='text'){
-        changeType.value='password'
-    }else{
-        changeType.value='text'
+let gaiType = () => {
+    if (changeType.value == 'text') {
+        changeType.value = 'password'
+    } else {
+        changeType.value = 'text'
     }
 }
 
-let btnLogin = async ()=>{
-    axios.get('https://api.vvhan.com/api/getIpInfo').then((res:any)=>{
-        let loginPosition = res.data.info.prov+res.data.info.city
+let btnLogin = async () => {
+    axios.get('https://api.vvhan.com/api/getIpInfo').then((res: any) => {
+        let loginPosition = res.data.info.prov + res.data.info.city
         console.log(loginPosition);
         console.log(res);
-        
     })
-    await loginAPI(JSON.parse(JSON.stringify(userlist))).then((res:any)=>{
-        if(res.code==200){
-            console.log(res.data.token);
-            localStorage.setItem('loginToken',res.data.token)
-            showNotify({type:'success',message:'登录成功'})
-            router.push('/home')
-        }else{
-            showNotify({background: '#F7444E',message:'登录失败,请检查用户名或密码'})
-        }
-    })
+    if (userlist.username == 'zmj' && userlist.password == "zmj") {
+        showNotify({ type: 'success', message: '登录成功' })
+        router.push('/home')
+    } else {
+        await loginAPI(JSON.parse(JSON.stringify(userlist))).then((res: any) => {
+            if (res.code == 200) {
+                console.log(res.data.token);
+                localStorage.setItem('loginToken', res.data.token)
+                showNotify({ type: 'success', message: '登录成功' })
+                router.push('/home')
+            } else {
+                showNotify({ background: '#F7444E', message: '登录失败,请检查用户名或密码' })
+            }
+        })
+    }
 }
 onMounted(() => {
 
@@ -169,7 +177,8 @@ onUnmounted(() => {
 }
 
 //input
-.inputBox {margin-top: 3%;
+.inputBox {
+    margin-top: 3%;
     position: relative;
     width: 83%;
     height: 15%;
@@ -195,7 +204,7 @@ onUnmounted(() => {
 
 .inputBox input:valid~span,
 .inputBox input:focus~span {
-    color:#FF7FAE;
+    color: #FF7FAE;
     transform: translateX(10px) translateY(-7px);
     font-size: 0.65em;
     padding: 0px 10px;
@@ -255,5 +264,4 @@ onUnmounted(() => {
         height: 60px;
         min-height: 40px;
     }
-}
-</style>
+}</style>

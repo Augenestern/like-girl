@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wBox {
+            display: flex;
+            flex-direction: column;
+        }
+        img{
+            width: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wBox">
+        <img src="../../assets/dw.jpg" data_src="../../assets/cat.jpg" alt="">
+        <img src="../../assets/dw.jpg" data_src="../../assets/haimian.png" alt="">
+        <img src="../../assets/dw.jpg" data_src="../../assets/q.PNG" alt="">
+        <img src="../../assets/dw.jpg" data_src="../../assets/two.png" alt="">
+        <img src="../../assets/dw.jpg" data_src="../../assets/yun.jpg" alt="">
+    </div>
+    <script>
+        let n = 0;
+        let num = document.getElementsByTagName('img').length
+        let img = document.getElementsByTagName('img')
+        lazyLoad()
+        window.onscroll = lazyLoad
+        function lazyLoad() {
+            let seeHeight = document.documentElement.clientHeight;
+            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            console.log(seeHeight,scrollTop);
+            for (let i = n; i < num; i++) {
+                if (img[i].offsetTop < seeHeight + scrollTop) {
+                    if (img[i].getAttribute('src') == "../../assets/dw.jpg") {
+                        img[i].src = img[i].getAttribute('data_src');
+                    }
+                    n = i + 1;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

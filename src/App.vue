@@ -61,7 +61,7 @@ setTimeout(() => {
           webview.close();
         } else { // 重置时间，
           time = new Date();
-          showToast('再次点击退出');
+          showToast('再次返回退出');
         }
         return;
       } else {
